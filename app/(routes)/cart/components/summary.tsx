@@ -3,11 +3,13 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import { Product } from "@/types";
 
 import Button from "@/components/ui/button";
 import Currency from "@/components/ui/currency";
 import useCart from "@/hooks/use-cart";
 import { toast } from "react-hot-toast";
+import { product } from "@/constants";
 
 const Summary = () => {
   const searchParams = useSearchParams();
@@ -31,9 +33,14 @@ const Summary = () => {
 
 
   const maillink = 'mailto:theonlyswt@gmail.com?subject=ENQUIRY FOR - '+ items.map((item) => ( '%20'+ item.name )) + '&body=Hello, I am sending enquiry for : %0D%0A %0D%0A ---------------------------------------------  %0D%0A' + items.map((item, index) => (
-    '|' +(index+1) +'| ' + item.category?.name + '%0D%0A     |'+ item.name + ' %0D%0A            |'+''+ item?.price +' (د.إ)AED |')+'%0D%0A'); + '%0D%0A ---------------------------------------------  %0D%0A My Total Cart is : (د.إ)AED ' + `${totalPrice}` + '/- %0D%0A ---------------------------------------------  %0D%0A%0D%0A Thank You!';
+    '|' +(index+1) +'| Color : ' + item.color?.name +'%20 | %20 Size : '+ item?.size.name+ '%0D%0A     >> '+ item.name + ' %0D%0A            |'+''+ item?.price +' (د.إ)AED |')+'%0D%0A') + '%0D%0A ---------------------------------------------  %0D%0A My Total Cart is : (د.إ)AED ' + `${totalPrice}` + '/- %0D%0A ---------------------------------------------  %0D%0A%0D%0A Thank You!';
   
 
+
+
+
+ 
+   
   // const onCheckout = async () => {
   //   const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkout`, {
   //     productIds: items.map((item) => item.id)
@@ -61,8 +68,13 @@ const Summary = () => {
       <Button  disabled={items.length === 0} className="w-full mt-6">
         Initiate Enquiry
       </Button>
+      
 
       </a>
+
+      
+
+
       {/* <Button onClick={onCheckout} disabled={items.length === 0} className="w-full mt-6">
         Checkout
       </Button> */}

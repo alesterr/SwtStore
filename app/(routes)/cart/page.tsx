@@ -35,6 +35,7 @@ const CartPage = () => {
                   <CartItem key={item.id} data={item} />
                 ))}
               </ul>
+             
             </div>
             <Summary />
           </div>
