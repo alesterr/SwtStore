@@ -29,13 +29,20 @@ const Summary = () => {
     return total + Number(item.price)
   }, 0);
 
-  const onCheckout = async () => {
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkout`, {
-      productIds: items.map((item) => item.id)
-    });
 
-    window.location = response.data.url;
-  }
+  const maillink = 'mailto:theonlyswt@gmail.com?subject=ENQUIRY FOR - '+ items.map((item) => ( '%20'+ item.name )) + '&body=Hello, I am sending enquiry for : %0D%0A %0D%0A ---------------------------------------------  %0D%0A' + items.map((item, index) => (
+    '|' +(index+1) +'| ' + item.category?.name + '%0D%0A     |'+ item.name + ' %0D%0A            |'+''+ item?.price +' (د.إ)AED |')+'%0D%0A'); + '%0D%0A ---------------------------------------------  %0D%0A My Total Cart is : (د.إ)AED ' + `${totalPrice}` + '/- %0D%0A ---------------------------------------------  %0D%0A%0D%0A Thank You!';
+  
+
+  // const onCheckout = async () => {
+  //   const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkout`, {
+  //     productIds: items.map((item) => item.id)
+  //   });
+
+  //   window.location = response.data.url;
+
+    
+  // }
 
   return ( 
     <div
@@ -50,9 +57,15 @@ const Summary = () => {
          <Currency value={totalPrice} />
         </div>
       </div>
-      <Button onClick={onCheckout} disabled={items.length === 0} className="w-full mt-6">
-        Checkout
+      <a href={maillink}>
+      <Button  disabled={items.length === 0} className="w-full mt-6">
+        Initiate Enquiry
       </Button>
+
+      </a>
+      {/* <Button onClick={onCheckout} disabled={items.length === 0} className="w-full mt-6">
+        Checkout
+      </Button> */}
     </div>
   );
 }
